@@ -335,6 +335,23 @@ export default class TilingShellExtension extends Extension {
                     if (!switcher.show(false, '', mask)) switcher.destroy();
                 },
             );
+            this._signals.connect(
+                this._keybindings,
+                'cycle-layouts-backward',
+                (
+                    _: KeyBindings,
+                    dp: Meta.Display,
+                    action: number,
+                    mask: number,
+                ) => {
+                    const switcher = new LayoutSwitcherPopup(
+                        action,
+                        !this._fractionalScalingEnabled,
+                    );
+
+                    if (!switcher.show(true, '', mask)) switcher.destroy();
+                },
+            );
         }
 
         // when Tiling Shell's edge-tiling is enabled/disable

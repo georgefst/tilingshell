@@ -56,6 +56,13 @@ export default class KeyBindings extends GObject.Object {
                     GObject.TYPE_INT,
                 ], // Meta.Display, number, number
             },
+            'cycle-layouts-backward': {
+                param_types: [
+                    Meta.Display.$gtype,
+                    GObject.TYPE_INT,
+                    GObject.TYPE_INT,
+                ], // Meta.Display, number, number
+            },
         },
     })};
 
@@ -256,6 +263,24 @@ export default class KeyBindings extends GObject.Object {
                     ? event.get_mask()
                     : binding.get_mask();
                 this.emit('cycle-layouts', display, action, mask);
+            },
+        );
+
+        const actionBackward = Main.wm.addKeybinding(
+            Settings.SETTING_CYCLE_LAYOUTS_BACKWARD,
+            extensionSettings,
+            Meta.KeyBindingFlags.NONE,
+            Shell.ActionMode.NORMAL,
+            (
+                display: Meta.Display,
+                _,
+                event: Clutter.Event,
+                binding: Meta.KeyBinding,
+            ) => {
+                const mask = event.get_mask
+                    ? event.get_mask()
+                    : binding.get_mask();
+                this.emit('cycle-layouts-backward', display, actionBackward, mask);
             },
         );
     }

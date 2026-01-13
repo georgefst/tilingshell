@@ -695,6 +695,13 @@ export default class TilingShellExtensionPreferences extends ExtensionPreference
                 false,
                 false,
             ],
+            [
+                Settings.SETTING_CYCLE_LAYOUTS_BACKWARD,
+                _('Cycle layouts backward'),
+                _('Cycle backward through available workspace layouts'),
+                false,
+                false,
+            ],
         ];
 
         // set if the keybinding was set or not by the user
