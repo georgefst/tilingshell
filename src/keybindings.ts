@@ -54,14 +54,16 @@ export default class KeyBindings extends GObject.Object {
                     Meta.Display.$gtype,
                     GObject.TYPE_INT,
                     GObject.TYPE_INT,
-                ], // Meta.Display, number, number
+                    GObject.TYPE_INT,
+                ], // Meta.Display, actionForward, actionBackward, mask
             },
             'cycle-layouts-backward': {
                 param_types: [
                     Meta.Display.$gtype,
                     GObject.TYPE_INT,
                     GObject.TYPE_INT,
-                ], // Meta.Display, number, number
+                    GObject.TYPE_INT,
+                ], // Meta.Display, actionForward, actionBackward, mask
             },
         },
     })};
@@ -262,7 +264,7 @@ export default class KeyBindings extends GObject.Object {
                 const mask = event.get_mask
                     ? event.get_mask()
                     : binding.get_mask();
-                this.emit('cycle-layouts', display, action, mask);
+                this.emit('cycle-layouts', display, action, actionBackward, mask);
             },
         );
 
@@ -280,7 +282,7 @@ export default class KeyBindings extends GObject.Object {
                 const mask = event.get_mask
                     ? event.get_mask()
                     : binding.get_mask();
-                this.emit('cycle-layouts-backward', display, actionBackward, mask);
+                this.emit('cycle-layouts-backward', display, action, actionBackward, mask);
             },
         );
     }

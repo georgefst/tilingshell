@@ -90,13 +90,15 @@ export class LayoutSwitcherPopup extends SwitcherPopup.SwitcherPopup {
     // @esbuild-drop-next-line
     private _selectedIndex!: number;
 
-    private _action: number;
+    private _actionForward: number;
+    private _actionBackward: number;
 
-    constructor(action: number, enableScaling: boolean) {
+    constructor(actionForward: number, actionBackward: number, enableScaling: boolean) {
         // @ts-expect-error "Parent can take a list"
         super(GlobalState.get().layouts);
 
-        this._action = action;
+        this._actionForward = actionForward;
+        this._actionBackward = actionBackward;
         // handle scale factor of the monitor
         const monitorScalingFactor = enableScaling
             ? getMonitorScalingFactor(this._getCurrentMonitorIndex())
@@ -123,8 +125,9 @@ export class LayoutSwitcherPopup extends SwitcherPopup.SwitcherPopup {
     _keyPressHandler(keysym: number, action: number) {
         if (keysym === Clutter.KEY_Left) this._select(this._previous());
         else if (keysym === Clutter.KEY_Right) this._select(this._next());
-        else if (action !== this._action) return Clutter.EVENT_PROPAGATE;
-        else this._select(this._next());
+        else if (action === this._actionForward) this._select(this._next());
+        else if (action === this._actionBackward) this._select(this._previous());
+        else return Clutter.EVENT_PROPAGATE;
 
         return Clutter.EVENT_STOP;
     }

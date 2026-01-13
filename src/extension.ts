@@ -324,11 +324,13 @@ export default class TilingShellExtension extends Extension {
                 (
                     _: KeyBindings,
                     dp: Meta.Display,
-                    action: number,
+                    actionForward: number,
+                    actionBackward: number,
                     mask: number,
                 ) => {
                     const switcher = new LayoutSwitcherPopup(
-                        action,
+                        actionForward,
+                        actionBackward,
                         !this._fractionalScalingEnabled,
                     );
 
@@ -341,11 +343,13 @@ export default class TilingShellExtension extends Extension {
                 (
                     _: KeyBindings,
                     dp: Meta.Display,
-                    action: number,
+                    actionForward: number,
+                    actionBackward: number,
                     mask: number,
                 ) => {
                     const switcher = new LayoutSwitcherPopup(
-                        action,
+                        actionForward,
+                        actionBackward,
                         !this._fractionalScalingEnabled,
                     );
 
