@@ -615,8 +615,9 @@ export default class TilingShellExtension extends Extension {
         const stackingOrder =
             global.display.sort_windows_by_stacking(windowList);
 
-        windowList
-            .filter((win) => {
+        stackingOrder
+            .map((win, winStackIndex) => ({ win, winStackIndex }))
+            .filter(({ win }) => {
                 if (win === focus_window || win.minimized) return false;
                 if (
                     onlyTiledWindows &&
@@ -637,7 +638,7 @@ export default class TilingShellExtension extends Extension {
                 }
                 return false;
             })
-            .forEach((win) => {
+            .forEach(({ win, winStackIndex }) => {
                 const winRect = win.get_frame_rect();
                 const winCenter = {
                     x: winRect.x + winRect.width / 2,
@@ -648,8 +649,6 @@ export default class TilingShellExtension extends Extension {
                     winCenter,
                     focusWindowCenter,
                 );
-
-                const winStackIndex = stackingOrder.indexOf(win);
 
                 if (
                     !bestWindow ||
